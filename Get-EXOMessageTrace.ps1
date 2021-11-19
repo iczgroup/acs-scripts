@@ -42,7 +42,10 @@ process {
     'All' {
       if ($SenderAddress) { $Params.SenderAddress = $SenderAddress }
       if ($RecipientAddress) { $Params.RecipientAddress = $RecipientAddress }
-      Get-MessageTrace @Params | Select-Object -Property Received,SenderAddress,RecipientAddress,Status,MessageId,Subject | ForEach-Object @Format
+      Get-MessageTrace @Params
+      | Sort-Object -Property Received
+      | Select-Object -Property Received,SenderAddress,RecipientAddress,Status,MessageId,Subject
+      | ForEach-Object @Format
     }
     'Message' {
       $Params.MessageId = $MessageId
